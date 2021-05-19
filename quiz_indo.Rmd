@@ -1,0 +1,199 @@
+---
+title: "Kuis Model Regresi"
+author: "Team Algoritma"
+date: "`r format = Sys.Date('%e, %B %Y')`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Kuis Model Regresi
+
+Kuis ini merupakan bagian dari proses penilaian *Algoritma Academy*. Selamat Anda sudah menyelesaikan materi *Regression Model*! Kami akan melakukan penilaian berupa kuis untuk menguji materi yang sudah dipelajari. Pengerjaan kuis diharapkan dapat dilakukan di dalam kelas, silahkan hubungi tim instruktur kami jika Anda melewatkan kesempatan untuk mengambilnya di kelas.
+
+## Eksplorasi Data
+
+Pada kuis ini Anda akan menggunakan data *criminologist* (`crime`). Anda dapat menjalankan chunk berikut pada Rmd anda untuk memastikan bahwa dataset yang digunakan sama:
+
+```{r}
+crime <- read.csv("crime.csv")
+```
+
+Untuk memastikan Anda telah memuat data dengan benar, lakukan pemeriksaan data sederhana. Coba lihat beberapa baris data menggunakan `head` atau` tail` dan periksa apakah kolom telah disimpan dengan tipe data yang sesuai.
+```{r}
+# your code here
+
+```
+
+Di antara semua variabel dalam kumpulan data `crime`, terdapat variabel`crime_rate` yang menggambarkan ukuran tingkat kejahatan di Amerika Serikat pada tahun 1960 untuk berbagai negara bagian. Bayangkan Anda bekerja sebagai analis pemerintah dan ingin melihat bagaimana kondisi sosial-ekonomi dapat mencerminkan tingkat kejahatan di suatu negara bagian. Ingat bagaimana kita dapat memeriksa korelasi untuk setiap variabel menggunakan `cor` atau `ggcorr` dari *package* `GGally`. Cobalah sendiri dan lihat variabel apa saja yang memiliki kemungkinan untuk memprediksi `crime_rate`.
+
+```{r}
+# your code here
+
+```
+
+Berdasarkan hasil di atas, Anda dapat mengetahui korelasi antara tiap variabel dengan `crime_rate`. Mengacu pada nilai tersebut, kita dapat melakukan pemilihan variabel awal untuk menentukan variabel prediktor yang sesuai.
+___
+1. Variabel mana di bawah ini yang memiliki korelasi tertinggi dengan variabel `crime_rate` sehingga diperkirakan cocok sebagai variabel prediktor?
+  - [ ] crime_rate
+  - [ ] police_exp60
+  - [ ] unemploy_m39
+  - [ ] nonwhites_per1000
+___
+
+## Membangun Linear Regression    
+
+Dari proses eksplorasi data, diketahui bahwa tidak semua variabel menunjukkan korelasi yang kuat dengan variabel `crime_rate`. Mari kita coba membuat model linier regresi sederhana menggunakan informasi terkait data keamanan negara bagian. Buat model regresi menggunakan fungsi `lm()` untuk memprediksi `crime_rate` berdasarkan `police_exp60` dan `time_prison` dari dataset yang ada, kemudian simpan model tersebut pada objek `model_crime`. Cek *summary* dari model tersebut.
+
+```{r}
+# your code here
+
+```
+___
+2. Manakah dari pernyataan berikut yang paling baik dalam menjelaskan *slope* (kemiringan) dari `time_prison`?
+  - [ ] Slope negatif; dan secara statistik tidak signifikan (P-value lebih besar dari 0.05)
+  - [ ] Slope positif, dan secara statistik signifikan (P-value lebih kecil dari 0.05)
+  - [ ] Slope positif, dan secara statistik tidak signifikan (P-value lebih besar dari 0.05)
+  - [ ] Slope negatif, dan secara statistik signifikan (P-value lebih kecil dari 0.05)
+
+*Referensi Opsi Bahasa Inggris:*
+  - [ ] It's a negative slope, and is statistically insignificant (P-value higher than 0.05)
+  - [ ] It's a positive slope, and is statistically significant (P-value lower than 0.05)
+  - [ ] It's a positive slope, and is statistically insignificant (P-value higher than 0.05)
+  - [ ] It's a negative slope, and is statistically significant (P-value lower than 0.05)
+
+3. Kesimpulan apa yang paling tepat dari model regresi diatas?
+  - [ ] Nilai R-squared mendekati 0.46, sehingga mengindikasikan model yang belum baik (nilai yang mendekati 1 semakin baik)
+  - [ ] Nilai R-squared mendekati 0.46, sehingga mengindikasikan model yang cukup baik (nilai yang mendekati 0 semakin baik)
+  - [ ] R-squared tidak memberikan informasi tentang kebaikan model, akan lebih baik bila menggunakan P-value untuk menilai kebaikan model
+
+*Referensi Opsi Bahasa Inggris:*
+  - [ ] The R-squared approximates 0.46, indicating a poor fit (the closer to 1 the better)
+  - [ ] The R-squared approximates 0.46, indicating a reasonable fit (the closer to 0 the better)
+  - [ ] The R-squared does not tell us about the quality of our model fit, we should use p-value instead
+___
+
+## Feature Selection dengan Stepwise Regression
+
+R-squared dari `model_crime` mendekati 0.46, dimana nilainya dapat ditingkatkan, misalnya dengan menambahkan lebih banyak variabel prediktor. Salah satu teknik pemilihan variabel prediktor adalah dengan algoritma *stepwise regression*. Buat model regresi menggunakan fungsi `lm()` untuk memprediksi `crime_rate` berdasarkan seluruh variabel. Kemudian, gunakan fungsi `step()` dengan parameter `direction = "backward"` dan simpan model terbaik pada objek `model_step`.
+
+```{r}
+# your code here
+
+```
+___
+4. Berdasarkan *summary* dari model terbaik, pernyataan mana yang **tidak tepat**?
+  - [ ] Peningkatan 1 poin dari unemploy_m24 akan menurunkan nilai crime_rate sebesar 6.3233
+  - [ ] Peningkatan 1 poin dari mean_education akan menaikkan nilai crime_rate sebesar 12.6480
+  - [ ] Adjusted R-squared adalah metrics yang lebih baik untuk mengevaluasi model di atas dibandingkan Multiple R-squared
+  - [ ] Seluruh variabel prediktor yang digunakan pada model di atas signifikan mempengaruhi crime_rate
+  
+*Referensi Opsi Bahasa Inggris:*
+  - [ ] An increase of 1 of unemploy_m24 causes the crime_rate to decrease by 6.3233
+  - [ ] An increase of 1 of mean_education causes the value of crime_rate to increase by 12.6480
+  - [ ] Adjusted R-squared is a better metrics for evaluating our model compared to Multiple R-squared
+  - [ ] All variables used as predictor in the final model are significantly influence crime_rate
+___
+
+## Shapiro test untuk Uji Asumsi Normality of Residuals
+
+Salah satu asumsi model regresi linier menyatakan bahwa error yang diperoleh dari model harus terdistribusi secara normal di sekitar mean 0. Anda perlu memvalidasi asumsi normalitas pada `model_step` menggunakan fungsi `shapiro.test()`. Fungsi ini mengharuskan kita untuk memasukkan *residual* model kita.
+
+```{r}
+# your code here
+
+```
+
+Untuk referensi Anda, pengujian Shapiro menggunakan hipotesis berikut:
+
+$H_0$ : Error terdistribusi secara normal
+
+$H_1$ : Error tidak terdistribusi secara normal
+
+___
+5. Berdasarkan pengujian Shapiro yang telah Anda lakukan, kesimpulan apa yang bisa ditarik?
+  - [ ] Error terdistribusi secara normal (P-value lebih kecil dari 0.05) 
+  - [ ] Error terdistribusi secara normal (P-value lebih besar dari 0.05) 
+  - [ ] Error tidak terdistribusi secara normal (P-value lebih besar dari 0.05)
+  - [ ] Error tidak terdistribusi secara normal (P-value lebih kecil dari 0.05) 
+
+*Referensi Opsi Bahasa Inggris:*
+  - [ ] Error is distributed normally (P-value lower than 0.05) 
+  - [ ] Error is distributed normally (P-value higher than 0.05) 
+  - [ ] Error is not distributed normally (P-value higher than 0.05) 
+  - [ ] Error is not distributed normally (P-value lower than 0.05) 
+___
+
+## Breusch-Pagan untuk Uji Asumsi Homoscedasticity
+
+Asumsi lain yang perlu Anda uji adalah apakah *error* pada model terdistribusi dengan variansi yang sama/konstan di rentang data yang berbeda atau tidak. Untuk menguji kondisi ini, Anda bisa menggunakan fungsi `bptest` dari package` lmtest` dan memasukkan model yang ingin diuji.
+
+Untuk referensi Anda, pengujian Breusch-Pagan menggunakan hipotesis berikut:    
+
+$H_0$: *Error* bersifat Homoscedasticity 
+
+$H_1$: *Error* bersifat Heteroscedasticity  
+
+```{r}
+# your code here
+
+```
+___
+6. Berdasarkan tes Breusch-Pagan yang telah Anda lakukan, kesimpulan apa yang bisa ditarik?
+  - [ ] Tidak terdapat Homoscedasticity
+  - [ ] Terdapat Homoscedasticity
+  - [ ] Data menyebar secara normal
+  - [ ] Tidak terdapat korelasi antara residual dengan target variabel
+
+*Referensi Opsi Bahasa Inggris:*
+  - [ ] Homoscedasticity is not present
+  - [ ] Homoscedasticity is present
+  - [ ] The data spreads normally
+  - [ ] There is no correlation between residuals and target variable
+___
+
+## Variance Inflation Factor
+
+Dengan menggunakan nilai VIF, kita dapat menentukan ada tidaknya multikolinearitas antar variabel prediktor. Nilai VIF yang tinggi menunjukkan korelasi yang tinggi antar variabel prediktor. Anda dapat menggunakan fungsi `vif` dari package` car`. Masukkan objek `model_step` kedalam fungsi dan lihat apakah ada multikolinearitas dalam model.
+
+```{r}
+# your code here
+
+```
+___
+7. Berdasarkan nilai VIF, interpretasi manakah yang benar?
+  - [ ] prob_prison tidak mempengaruhi crime_rate secara signifikan
+  - [ ] Peningkatan 1 poin dari mean_education akan meningkatkan nilai crime_rate sebesar 4.1897
+  - [ ] unemploy_m24 dan unemploy_m39 memiliki multikolinearitas sehingga kita harus memilih satu saja dari keduanya untuk digunakan pada model
+  - [ ] Tidak terdapat Multikolinearitas pada model karena seluruh variable memiliki nilai VIF yang kurang dari 10
+
+*Referensi Opsi Bahasa Inggris:*
+  - [ ] prob_prison does not significantly affect crime_rate
+  - [ ] An increase of 1 value on mean_education causes the value of crime_rate to increase by 4.1897
+  - [ ] unemploy_m24 and unemploy_m39 is having multicollinearity therefore we need to pick only one to be used in the model
+  - [ ] Multicollinearity is not present in our model because the VIF values for all variables are below 10 
+  ___
+
+## Memprediksi Data Baru
+
+Anda telah melakukan pengujian statistik untuk memastikan model tersebut lulus asumsi model regresi linier. Sekarang bayangkan Anda diberi kumpulan data baru yang mencatat variabel sosio-ekonomi yang sama dari pengamatan (observasi) yang berbeda. Data tersebut disimpan pada `crime_test.csv`, silahkan baca data tersebut dan simpan kedalam objek bernama `crime_test`. Selanjutnya, buat prediksi crime rate untuk data baru tersebut menggunakan `model_step`. Anda dapat menyimpan hasil prediksi pada kolom baru di data `crime_test`.
+
+```{r}
+# your code here
+
+```
+
+Sekarang perhatikan data `crime_test`. Anda akan melihat kolom `crime_rate` yang menyimpan nilai sebenarnya dari tingkat kejahatan (crime rate) untuk tiap observasi. Di dalam kelas, Anda telah mempelajari beberapa ukuran/*metrics* untuk mengevaluasi kinerja model. Coba hitung nilai *Mean Absolute Error* (`MAE`) dari hasil prediksi `model_step`. Anda dapat menggunakan fungsi `MAE` dari package `MLMetrics` dengan memasukkan parameter `y_true` dan `y_pred`.
+
+```{r}
+# your code here
+
+```
+___
+8. Berapa nilai MAE dari hasil prediksi `crime_test`? (bulatkan menjadi dua angka di belakang koma)    
+  - [ ] 180.73
+  - [ ] 170.54
+  - [ ] 177.73
+___

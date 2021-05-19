@@ -1,0 +1,165 @@
+---
+title: "Regression Models Quiz"
+author: "Team Algoritma"
+date: "`r format(Sys.Date(), '%B %e, %Y')`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+# Regression Model Quiz
+
+This quiz is part of Algoritma Academy assessment process. Congratulations on completing the Regression Model course! We will conduct an assessment quiz to test the practical regression model techniques that you have learned on the course. The quiz is expected to be taken in the classroom, please contact our team of instructors if you missed the chance to take it in class.
+
+## Data Exploration
+
+In this quiz, you will be using the criminologist dataset (`crime.csv`). You can run the following chunk to make sure we are using the same dataset:
+
+```{r}
+crime <- read.csv("crime.csv")
+```
+
+To make sure you have loaded the data correctly, do a simple inspection of the data. Try to peek in using `head` or `tail` and see if the columns have been stored in its appropriate data types.
+```{r}
+# your code here
+
+```
+
+Among all variables within our `crime` dataset, there is a `crime_rate` variable that describes the measure of crime rate for each State within the United States in 1960. Imagine you are working as a government analyst and would like to see how social-economic conditions could reflect on the crime rate of a state. Recall how we can inspect the correlation for each variable using `cor` or `ggcorr` from `GGally` package. Try it out on your own and see what are the possible predictor variables for our `crime_rate` variable.
+
+```{r}
+# your code here
+
+```
+
+Based on the result, you will know how each variable correlates with the `crime_rate` variable. Referring to that result, we can perform a preliminary variable selection to select suitable predictor variables.
+___
+1. From the following, which variable has the highest correlation with our `crime_rate` variable and might be suitable as a predictor?
+  - [ ] crime_rate
+  - [ ] police_exp60
+  - [ ] unemploy_m39
+  - [ ] nonwhites_per1000
+___
+
+## Building Linear Regression    
+
+From the data exploration process, it is known that not all variables show a strong correlation with the `crime_rate` variable. Now lets try to build a simple linear model using business consideration on State's security data. Create a regression model using `lm()` function to predict `crime_rate` based on `police_exp60` and `time_prison` from our dataset and assign it to an object named `model_crime`. Check the summary of that model.
+
+```{r}
+# your code here
+
+```
+___
+2. Which of the following best describes the slope for `time_prison`?
+  - [ ] It's a negative slope, and is statistically insignificant (P-value higher than 0.05)
+  - [ ] It's a positive slope, and is statistically significant (P-value lower than 0.05)
+  - [ ] It's a positive slope, and is statistically insignificant (P-value higher than 0.05)
+  - [ ] It's a negative slope, and is statistically significant (P-value lower than 0.05)
+
+3. What is the most fitting conclusion from the regression model above?
+  - [ ] The R-squared approximates 0.46, indicating a poor fit (the closer to 1 the better)
+  - [ ] The R-squared approximates 0.46, indicating a reasonable fit (the closer to 0 the better)
+  - [ ] The R-squared does not tell us about the quality of our model fit, we should use p-value instead
+___
+
+## Feature Selection using Stepwise Regression
+
+The R-squared of `model_crime` approximates 0.46, which can be improved upon, for example, by adding more predictor variables. One of the techniques for selecting predictor variables is using stepwise regression algorithm. Create a regression model using `lm()` function to predict `crime_rate` using all variables. Then, use the `step()` function with `direction="backward"` to perform stepwise regression. Store the best model under the `model_step` object.
+
+```{r}
+# your code here
+
+```
+___
+4. Based on the summary of your final model, which statement is **incorrect**?
+  - [ ] An increase of 1 of unemploy_m24 causes the crime_rate to decrease by 6.3233
+  - [ ] An increase of 1 of mean_education causes the value of crime_rate to increase by 12.6480
+  - [ ] Adjusted R-squared is a better metrics for evaluating our model compared to Multiple R-squared
+  - [ ] All variables used as predictor in the final model are significantly influence crime_rate
+___
+
+## Shapiro test for Normality test
+
+One of the assumptions for linear regression stated that the error obtained from the model must be distributed normally around the mean of 0. You will need to validate our normality assumption from `model_step` using `shapiro.test()` function. This function requires us to pass in the residuals of our model.
+
+```{r}
+# your code here
+
+```
+
+For your reference, Shapiro testing use the following hypotheses:
+
+$H_0$ : Error is distributed normally  
+
+$H_1$ : Error is not distributed normally  
+
+___
+5. Based on the Shapiro test you have performed, what conclusion can be drawn from the result?
+  - [ ] Error is distributed normally (P-value lower than 0.05) 
+  - [ ] Error is distributed normally (P-value higher than 0.05) 
+  - [ ] Error is not distributed normally (P-value higher than 0.05) 
+  - [ ] Error is not distributed normally (P-value lower than 0.05) 
+___
+
+## Breusch-Pagan for Homoscedasticity Test
+
+Another assumption you need to test is whether or not the error is distributed with equal variance over different data ranges. To test this behavior, you can use the `bptest` function from `lmtest` package and pass in our model.
+
+For your reference, Breusch-Pagan testing use the following hypotheses:
+
+$H_0$: Error is considered Homoscedasticity  
+
+$H_1$: Error is considered Heteroscedasticity  
+
+```{r}
+# your code here
+
+```
+___
+6. Based on Breusch-Pagan test you have performed, what conclusion can be drawn from the result?
+  - [ ] Homoscedasticity is not present
+  - [ ] Homoscedasticity is present
+  - [ ] The data spreads normally
+  - [ ] There is no correlation between residuals and target variable
+___
+
+## Variance Inflation Factor
+
+Using VIF value, we can determine whether or not there are multicollinearity between predictor variables. A high VIF value indicates a high correlation between the variables. You can use the `vif` function from `car` package. Pass in our `model_step` object into the function and see if there's a multicollinearity in the model.
+
+```{r}
+# your code here
+
+```
+___
+7. Based on the VIF value, which interpretation is correct?
+  - [ ] prob_prison does not significantly affect crime_rate
+  - [ ] An increase of 1 value on mean_education causes the value of crime_rate to increase by 4.1897
+  - [ ] unemploy_m24 and unemploy_m39 is having multicollinearity therefore we need to pick only one to be used in the model
+  - [ ] Multicollinearity is not present in our model because the VIF values for all variables are below 10 
+  ___
+
+## Predicting Unseen Data
+
+You have performed statistical tests to make sure the model passed the assumptions of a linear regression model. Now imagine you were given a new dataset that records the same socio-economic variables from different observations. The data is stored under `crime_test.csv`, please read the data and store it under an object named `crime_test`. Next, predict the crime rate for that new data using `model_step`. You can store your prediction under a new column in the `crime_test` data.
+
+```{r}
+# your code here
+
+```
+
+Now, pay attention to the `crime_test` data. Among the variables you should see a `crime_rate` column describing the real crime rate for each observation. Within the workshop, you have learned some metrics to evaluate our model performance. Try to calculate the Mean Absolute Error (`MAE`) of our `model_step` prediction. You can use the `MAE` function from `MLMetrics` package by passing in `y_true` and `y_pred` parameter.
+
+```{r}
+# your code here
+
+```
+___
+8. What is the MAE value of the crime_test prediction? (round to two decimal points)    
+  - [ ] 180.73
+  - [ ] 170.54
+  - [ ] 177.73
+___
