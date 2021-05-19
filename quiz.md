@@ -4,19 +4,20 @@ This quiz is part of Algoritma Academy assessment process. Congratulations on co
 
 ## Data Exploration
 
-In this quiz, you will be using criminologist dataset (`crime`). You can run the following chunk in your RMarkdown to make sure we are using the same dataset:
+In this quiz, you will be using the criminologist dataset (`crime.csv`). You can run the following chunk to make sure we are using the same dataset:
 
 ```
 crime <- read.csv("crime.csv") 
 ```
 
 To make sure you have loaded the data correctly, do a simple inspection of the data. Try to peek in using `head` or `tail` and see if the columns have been stored in its appropriate data types.
+
 ```
 # your code here
 
 ```
 
-Among all variables within our `crime` dataset, there is a `crime_rate` variable that describes the measure of crime rate for each State within the United States in 1960. Imagine you are working as a government analyst and would like to see how social-economic conditions could reflect on the crime rate of a State. Recall how we can inspect the correlation for each variable using `cor` or `ggcorr` from `GGally` package. Try it out on your own and see what are the possible predictor variables for our `crime_rate` variable.
+Among all variables within our `crime` dataset, there is a `crime_rate` variable that describes the measure of crime rate for each State within the United States in 1960. Imagine you are working as a government analyst and would like to see how social-economic conditions could reflect on the crime rate of a state. Recall how we can inspect the correlation for each variable using `cor` or `ggcorr` from `GGally` package. Try it out on your own and see what are the possible predictor variables for our `crime_rate` variable.
 
 ```
 # your code here
@@ -32,9 +33,10 @@ ___
   - [ ] nonwhites_per1000
 ___
 
+
 ## Building Linear Regression    
 
-From the data exploration process, it is known that not all variables show a strong correlation with the `crime_rate` variable. Now let's try to build a simple linear model using business consideration on State's security data. Create a regression model using `lm()` function to predict `crime_rate` based on `police_exp60` and `time_prison` from our dataset and assign it to an object named `model_crime`. Check the summary of that model.
+From the data exploration process, it is known that not all variables show a strong correlation with the `crime_rate` variable. Now lets try to build a simple linear model using business consideration on State's security data. Create a regression model using `lm()` function to predict `crime_rate` based on `police_exp60` and `time_prison` from our dataset and assign it to an object named `model_crime`. Check the summary of that model.
 
 ```
 # your code here
@@ -66,7 +68,7 @@ ___
   - [ ] An increase of 1 of unemploy_m24 causes the crime_rate to decrease by 6.3233
   - [ ] An increase of 1 of mean_education causes the value of crime_rate to increase by 12.6480
   - [ ] Adjusted R-squared is a better metrics for evaluating our model compared to Multiple R-squared
-  - [ ] All variables used as predictor in the final model is considered significant
+  - [ ] All variables used as predictor in the final model are significantly influence crime_rate
 ___
 
 ## Shapiro test for Normality test
@@ -89,20 +91,20 @@ ___
   - [ ] Error is distributed normally (P-value lower than 0.05) 
   - [ ] Error is distributed normally (P-value higher than 0.05) 
   - [ ] Error is not distributed normally (P-value higher than 0.05) 
-  - [ ] Error is not distributed normally (P-value lower than 0.05)  
+  - [ ] Error is not distributed normally (P-value lower than 0.05) 
 ___
 
-## Breusch-Pagan for Heteroskedasticity Test
+## Breusch-Pagan for Homoscedasticity Test
 
-Another assumption you need to test is whether or not the error of our model is homoscedastic. Homoscedastic means the error is distributed with equal variance over different data ranges. To test this behavior, you can use the `bptest` function from `lmtest` package and pass in our model.
+Another assumption you need to test is whether or not the error is distributed with equal variance over different data ranges. To test this behavior, you can use the `bptest` function from `lmtest` package and pass in our model.
 
 For your reference, Breusch-Pagan testing use the following hypotheses:
 
-$H_0$: Error is considered Homoscedastic  
+$H_0$: Error is considered Homoscedasticity  
 
-$H_1$: Error is considered Heteroscedastic  
+$H_1$: Error is considered Heteroscedasticity  
 
-```
+```{r}
 # your code here
 
 ```
@@ -132,14 +134,14 @@ ___
 
 ## Predicting Unseen Data
 
-You have performed statistical tests to make sure the model passed the assumptions of a linear regression model. Now imagine you were given a new dataset that records the same socio-economic variables from different observations. The data is stored under `crime_test.csv`, please read the data and store it under an object named `crime_test`. Next, predict the crime rate for that new data using `model_step`. You can store your prediction values under a new column in the `crime_test` data.
+You have performed statistical tests to make sure the model passed the assumptions of a linear regression model. Now imagine you were given a new dataset that records the same socio-economic variables from different observations. The data is stored under `crime_test.csv`, please read the data and store it under an object named `crime_test`. Next, predict the crime rate for that new data using `model_step`. You can store your prediction under a new column in the `crime_test` data.
 
 ```
 # your code here
 
 ```
 
-Now pay attention to the `crime_test` data. Among the variables you should see a `crime_rate` column describing the real crime rate for each observation. Within the workshop you have learned some metrics to evaluate our model performance. Try to calculate the Mean Absolute Error (`MAE`) of our `model_step` prediction. You can use the `MAE` function from `MLMetrics` package by passing in `y_true` and `y_pred` parameter.
+Now, pay attention to the `crime_test` data. Among the variables you should see a `crime_rate` column describing the real crime rate for each observation. Within the workshop, you have learned some metrics to evaluate our model performance. Try to calculate the Mean Absolute Error (`MAE`) of our `model_step` prediction. You can use the `MAE` function from `MLMetrics` package by passing in `y_true` and `y_pred` parameter.
 
 ```
 # your code here
