@@ -85,8 +85,8 @@ R-squared dari `model_crime` mendekati 0.46, dimana nilainya dapat ditingkatkan,
 ```
 ___
 4. Berdasarkan *summary* dari model terbaik, pernyataan mana yang **tidak tepat**?
-  - [ ] Peningkatan 1 poin dari unemploy_m24 akan menurunkan nilai crime_rate sebesar 6.3233
-  - [ ] Peningkatan 1 poin dari mean_education akan menaikkan nilai crime_rate sebesar 12.6480
+  - [ ] Peningkatan 1 poin dari unemploy_m24 akan menurunkan nilai crime_rate sebesar 6.087
+  - [ ] Peningkatan 1 poin dari mean_education akan menaikkan nilai crime_rate sebesar 18.012
   - [ ] Adjusted R-squared adalah metrics yang lebih baik untuk mengevaluasi model di atas dibandingkan Multiple R-squared
   - [ ] Seluruh variabel prediktor yang digunakan pada model di atas signifikan mempengaruhi crime_rate
   
