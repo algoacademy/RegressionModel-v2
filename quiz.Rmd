@@ -75,8 +75,8 @@ The R-squared of `model_crime` approximates 0.46, which can be improved upon, fo
 ```
 ___
 4. Based on the summary of your final model, which statement is **incorrect**?
-  - [ ] An increase of 1 of unemploy_m24 causes the crime_rate to decrease by 6.3233
-  - [ ] An increase of 1 of mean_education causes the value of crime_rate to increase by 12.6480
+  - [ ] An increase of 1 of unemploy_m24 causes the crime_rate to decrease by 6.087
+  - [ ] An increase of 1 of mean_education causes the value of crime_rate to increase by 18.012
   - [ ] Adjusted R-squared is a better metrics for evaluating our model compared to Multiple R-squared
   - [ ] All variables used as predictor in the final model are significantly influence crime_rate
 ___
